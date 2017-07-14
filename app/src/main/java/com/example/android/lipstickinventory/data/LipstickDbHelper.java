@@ -34,7 +34,7 @@ public class LipstickDbHelper extends SQLiteOpenHelper {
         // Create a String that contains the SQL statement to create the pets table
         String SQL_CREATE_LIPSTICK_TABLE =  "CREATE TABLE " + LipstickEntry.TABLE_NAME + " ("
                 + LipstickEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + LipstickEntry.COLUMN_LIPSTICK_IMAGE + " TEXT NOT NULL DEFAULT 'no image', "
+                + LipstickEntry.COLUMN_LIPSTICK_IMAGE + " TEXT NOT NULL DEFAULT 'no_image', "
                 + LipstickEntry.COLUMN_LIPSTICK_COLOR + " TEXT NOT NULL, "
                 + LipstickEntry.COLUMN_LIPSTICK_BRAND + " TEXT, "
                 + LipstickEntry.COLUMN_LIPSTICK_PRICE + " INTEGER NOT NULL, "
