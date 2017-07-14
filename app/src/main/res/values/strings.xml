@@ -7,5 +7,5 @@
     <string name="hint_lipstick_brand">Brand</string>
     <string name="category_quantity">Quantity</string>
     <string name="category_price">Price</string>
-    <string name="hint_lipstick_price">Price</string>
+    <string name="hint_lipstick_price">Price in Cents</string>
 </resources>
