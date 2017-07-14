@@ -9,14 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:label="Inventory">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity"></activity>
+        <activity
+            android:name=".DetailActivity"
+            android:theme="@style/EditorTheme"
+            android:parentActivityName=".MainActivity">
+        </activity>
+        <provider
+            android:name=".data.LipstickProvider"
+            android:authorities="com.example.android.lipstick"
+            android:exported="false" />
     </application>
 
 </manifest>

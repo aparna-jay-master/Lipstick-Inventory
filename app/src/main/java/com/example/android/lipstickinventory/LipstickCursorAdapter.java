@@ -55,13 +55,13 @@ public class LipstickCursorAdapter extends CursorAdapter {
         String lipstickImage = cursor.getString(imageColumnIndex);
 
         //Convert price into dollars
-        int lipstickDollars = lipstickPrice/100;
-        DecimalFormat lipstickDecimal = new DecimalFormat("#.00");
+        //int lipstickDollars = lipstickPrice/100;
+        //DecimalFormat lipstickDecimal = new DecimalFormat("#.00");
 
         //Update Text Views
         colorView.setText(lipstickColor);
         quantityView.setText("Quantity: " + lipstickQuantity);
-        priceView.setText("$" + lipstickDecimal);
+        priceView.setText("$" + lipstickPrice);
 
         //Update ImageView
         //TODO: figure out how to put a real image here

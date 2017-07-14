@@ -14,13 +14,13 @@ public class LipstickContract {
     private LipstickContract () {}
 
     //Content authority
-    public static final String CONTENT_AUTHORITY = "com.example.android.lipstickinventory";
+    public static final String CONTENT_AUTHORITY = "com.example.android.lipstick";
 
     //Create base URIs to content with content provider
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     //Possible path to lipstick data
-    public static final String PATH_LIPSTICK = "lipstick";
+    public static final String PATH_LIPSTICK = "lipsticks";
 
     /**
      * Inner class to define constant vlaues for database table

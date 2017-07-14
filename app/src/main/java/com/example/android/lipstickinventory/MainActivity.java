@@ -87,8 +87,10 @@ public class MainActivity extends AppCompatActivity
     private void insertInventoryData() {
         // Create a ContentValues object where column names are the keys and we input inventory
         ContentValues values = new ContentValues();
+        values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, "no_image");
         values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, "Vibrant Red");
-        values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, "1500");
+        values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, "Urban Decay");
+        values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, 1500);
         values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, 7);
 
         // Insert a new row
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_catalog.xml file.
+        // Inflate the menu options from the res/menu/menu_main.xml file.
         // This adds menu items to the app bar.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;

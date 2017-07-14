@@ -8,4 +8,9 @@
     <string name="category_quantity">Quantity</string>
     <string name="category_price">Price</string>
     <string name="hint_lipstick_price">Price in Cents</string>
+
+    <!--Label for overflow menu option that inserts inventory data -->
+    <string name="action_insert_dummy_data">Add Inventory</string>
+    <!--Label for overflow menu option that deletes inventory data -->
+    <string name="action_delete_all_entries">Clear Inventory</string>
 </resources>
