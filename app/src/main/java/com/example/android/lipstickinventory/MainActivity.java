@@ -134,9 +134,11 @@ public class MainActivity extends AppCompatActivity
         //Define projection for columns we care about
         String [] projection = {
                 LipstickEntry._ID,
+                LipstickEntry.COLUMN_LIPSTICK_IMAGE,
                 LipstickEntry.COLUMN_LIPSTICK_COLOR,
+                LipstickEntry.COLUMN_LIPSTICK_BRAND,
                 LipstickEntry.COLUMN_LIPSTICK_PRICE,
-                LipstickEntry.COLUMN_LIPSTICK_PRICE};
+                LipstickEntry.COLUMN_LIPSTICK_QUANTITY};
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
