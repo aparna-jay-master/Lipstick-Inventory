@@ -2,4 +2,10 @@
     <string name="app_name">Lipstick Inventory</string>
     <string name="empty_view_title_text">Where are all the colors?</string>
     <string name="empty_view_subtitle_text">Get started by adding a lipstick</string>
+    <string name="category_overview">Overview</string>
+    <string name="hint_lipstick_color">Color</string>
+    <string name="hint_lipstick_brand">Brand</string>
+    <string name="category_quantity">Quantity</string>
+    <string name="category_price">Price</string>
+    <string name="hint_lipstick_price">Price</string>
 </resources>
