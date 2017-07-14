@@ -45,6 +45,9 @@ public class LipstickContract {
         //Unique ID number (used by table only), integer
         public final static String _ID = BaseColumns._ID;
 
+        //Lipstick image
+        public final static String COLUMN_LIPSTICK_IMAGE = "image";
+
         //Lipstick color (also name), text
         public final static String COLUMN_LIPSTICK_COLOR = "color";
 
