@@ -3,6 +3,7 @@ package com.example.android.lipstickinventory;
 import android.content.Context;
 import android.database.Cursor;
 import android.icu.text.DecimalFormat;
+import android.icu.text.NumberFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,13 +57,12 @@ public class LipstickCursorAdapter extends CursorAdapter {
         String lipstickImage = cursor.getString(imageColumnIndex);
 
         //Convert price into dollars
-        //int lipstickDollars = lipstickPrice/100;
-        //DecimalFormat lipstickDecimal = new DecimalFormat("#.00");
+        int lipstickDollars = lipstickPrice/100;
 
         //Update Text Views
         colorView.setText(lipstickColor);
         quantityView.setText("Quantity: " + lipstickQuantity);
-        priceView.setText("$" + lipstickPrice);
+        priceView.setText("$" + lipstickDollars);
 
         //Update ImageView
         //TODO: figure out how to put a real image here

@@ -20,31 +20,27 @@
         android:textStyle="bold"
         android:text="Bright Red"
         android:textSize="16sp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:padding="8dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
         <TextView
             android:id="@+id/grid_quantity"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:textSize="16sp"
-            android:textAlignment="textEnd"
-            android:layout_gravity="end"
-            android:paddingRight="8dp"
+            android:paddingBottom="4dp"
             android:text="Quantity: 3"/>
         <TextView
             android:id="@+id/grid_price"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:textSize="16sp"
             android:paddingLeft="8dp"
+            android:paddingRight="16dp"
             android:text="$18.00"/>
-    </LinearLayout>
+
     <Button
         android:id="@+id/grid_sale_button"
         android:layout_width="match_parent"
