@@ -121,26 +121,12 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <Button
-                android:id="@+id/detail_sale_button"
-                android:layout_width="0dp"
+                android:id="@+id/detail_order_button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:text="Sale" />
+                android:text="Order More" />
 
-            <Button
-                android:id="@+id/detail_delete_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:text="Delete" />
-
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

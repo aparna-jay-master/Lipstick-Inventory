@@ -12,7 +12,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -94,7 +93,7 @@ public class DetailActivity extends AppCompatActivity implements
         mPriceView = (EditText) findViewById(R.id.detail_lipstick_price);
 
         //Identify all button views
-        //TODO: Sale and email buttons
+        //TODO: Order button
         mPlusButton = (Button) findViewById(R.id.detail_plus_button);
         mMinusButton = (Button) findViewById(R.id.detail_minus_button);
 
@@ -215,7 +214,7 @@ public class DetailActivity extends AppCompatActivity implements
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        // If this is a new pet, hide the "Delete" menu item.
+        // If this is a new lipstick, hide the "Delete" menu item.
         if (mCurrentLipstickUri == null) {
             MenuItem menuItem = menu.findItem(R.id.action_delete);
             menuItem.setVisible(false);
@@ -413,7 +412,7 @@ public class DetailActivity extends AppCompatActivity implements
      * Perform the deletion of the lipstick in the database.
      */
     private void deleteLipstick() {
-        // Only perform the delete if this is an existing pet.
+        // Only perform the delete if this is an existing lipstick.
         if (mCurrentLipstickUri != null) {
             // Call the ContentResolver to delete the lipstick at the given content URI.
             int rowsDeleted = getContentResolver().delete(mCurrentLipstickUri, null, null);

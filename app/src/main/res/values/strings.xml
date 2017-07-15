@@ -47,8 +47,8 @@
     <!-- Dialog button text for the option to keep editing the current lipstick [CHAR LIMIT=20] -->
     <string name="keep_editing">Keep Editing</string>
 
-    <!-- Dialog message to ask the user to confirm deleting the current pet [CHAR LIMIT=NONE] -->
-    <string name="delete_dialog_msg">Delete this pet?</string>
+    <!-- Dialog message to ask the user to confirm deleting the current lipstick [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this lipstick?</string>
 
     <!-- Dialog button text for the option to confirm deleting the current lipstick [CHAR LIMIT=20] -->
     <string name="delete">Delete</string>
@@ -56,10 +56,10 @@
     <!-- Dialog button text for the option to cancel deletion of the current lipstick [CHAR LIMIT=20] -->
     <string name="cancel">Cancel</string>
 
-    <!-- Toast message in editor when current pet was successfully deleted [CHAR LIMIT=NONE] -->
+    <!-- Toast message in editor when current lipstick was successfully deleted [CHAR LIMIT=NONE] -->
     <string name="editor_delete_lipstick_successful">Lipstick deleted</string>
 
-    <!-- Toast message in detail when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
+    <!-- Toast message in detail when current lipstick has failed to be deleted [CHAR LIMIT=NONE] -->
     <string name="editor_delete_lipstick_failed">Error with deleting lipstick</string>
 
     <!-- Toast message in detail when quantity tries to go below zero -->
