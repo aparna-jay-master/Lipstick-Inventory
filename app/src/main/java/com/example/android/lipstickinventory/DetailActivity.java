@@ -1,17 +1,21 @@
 package com.example.android.lipstickinventory;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.app.LoaderManager;
+import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -25,6 +29,7 @@ import android.content.Loader;
 
 import com.example.android.lipstickinventory.data.LipstickContract.LipstickEntry;
 
+import static android.R.attr.data;
 import static android.R.attr.name;
 import static android.R.id.message;
 
@@ -37,7 +42,7 @@ public class DetailActivity extends AppCompatActivity implements
     //Content URI for existing lipstick (and if null it's a new lipstick)
     private Uri mCurrentLipstickUri;
 
-    //Image field to add image (one day)
+    //Image field to add image
     private ImageView mImageView;
 
     //Edit Texts
@@ -101,11 +106,23 @@ public class DetailActivity extends AppCompatActivity implements
         mMinusButton = (Button) findViewById(R.id.detail_minus_button);
         mOrderButton = (Button) findViewById(R.id.detail_order_button);
 
+        mImageView.setOnTouchListener(mTouchListener);
         mColorView.setOnTouchListener(mTouchListener);
         mBrandView.setOnTouchListener(mTouchListener);
         mPriceView.setOnTouchListener(mTouchListener);
         mPlusButton.setOnTouchListener(mTouchListener);
         mMinusButton.setOnTouchListener(mTouchListener);
+
+        //Open camera when you press on image
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, 1);
+                }
+                }
+        });
 
         //Plus and minus buttons
         mPlusButton.setOnClickListener(new View.OnClickListener() {
@@ -153,16 +170,22 @@ public class DetailActivity extends AppCompatActivity implements
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
-
-
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            mImageView.setImageBitmap(photo);
+        }
     }
 
     private void saveLipstick() {
         //Read input fields
         //Use trim to eliminate leading or trailing white space
-         String colorString = mColorView.getText().toString().trim();
+        //TODO: add image here
+        String colorString = mColorView.getText().toString().trim();
          String brandString = mBrandView.getText().toString().trim();
          String priceString = mPriceView.getText().toString().trim();
          String quantityString = mQuantityView.getText().toString().trim();
@@ -177,6 +200,7 @@ public class DetailActivity extends AppCompatActivity implements
          //Create ContentValues where column names are the keys and lipstick
          //attributes from the editor are values
          ContentValues values = new ContentValues();
+         //TODO:this isn't a string anymore
          values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, "no_image");
          values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, colorString);
          //if there is no price
@@ -358,6 +382,7 @@ public class DetailActivity extends AppCompatActivity implements
             int priceColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_PRICE);
             int quantityColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_QUANTITY);
 
+            //TODO need to change this
             String image = cursor.getString(imageColumnIndex);
             String color = cursor.getString(colorColumnIndex);
             String brand = cursor.getString(brandColumnIndex);

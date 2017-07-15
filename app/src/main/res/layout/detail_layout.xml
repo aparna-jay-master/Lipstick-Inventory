@@ -11,11 +11,13 @@
 
         <ImageView
             android:id="@+id/detail_lipstick_image_view"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             android:padding="16dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/camera"/>
 
         <LinearLayout
             android:layout_width="match_parent"

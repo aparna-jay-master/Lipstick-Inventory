@@ -123,6 +123,8 @@ public class LipstickProvider extends ContentProvider {
      * for that specific row in the database.
      */
     private Uri insertLipstick(Uri uri, ContentValues values) {
+        //TODO: add image stuff here
+
         // Check that the color is not null
         String color = values.getAsString(LipstickEntry.COLUMN_LIPSTICK_COLOR);
         if (color == null) {
@@ -190,6 +192,8 @@ public class LipstickProvider extends ContentProvider {
      */
     private int updateLipstick(Uri uri, ContentValues values,
                                String selection, String[] selectionArgs) {
+        //TODO insert image check here
+
         // If the color key is present check that the color value is not null.
         if (values.containsKey(LipstickEntry.COLUMN_LIPSTICK_COLOR)) {
             String name = values.getAsString(LipstickEntry.COLUMN_LIPSTICK_COLOR);
