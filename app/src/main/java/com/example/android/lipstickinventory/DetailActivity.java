@@ -24,8 +24,6 @@ import android.content.Loader;
 
 import com.example.android.lipstickinventory.data.LipstickContract.LipstickEntry;
 
-import static android.R.attr.data;
-
 public class DetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -103,7 +101,6 @@ public class DetailActivity extends AppCompatActivity implements
          String colorString = mColorView.getText().toString().trim();
          String brandString = mBrandView.getText().toString().trim();
          String priceString = mPriceView.getText().toString().trim();
-         int priceInteger = Integer.parseInt(priceString);
 
          //TODO if quantity changes
          if (mCurrentLipstickUri == null &&
@@ -113,21 +110,27 @@ public class DetailActivity extends AppCompatActivity implements
              return;
          }
 
-         //Create ContentValues where column names are the keyes and lipstick
+         //Create ContentValues where column names are the keys and lipstick
          //attributes from the editor are values
          ContentValues values = new ContentValues();
          values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, "no_image");
          values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, colorString);
-         values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, priceInteger);
+         //if there is no price
+         int price = 0;
+         if (!TextUtils.isEmpty(priceString)) {
+             price = Integer.parseInt(priceString);
+         }
+         values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, price);
          //TODO update this from the changes in the buttons
          values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, 0);
          //if there's no brand
-         String brand = "n/a";
+         String brand = "none";
          if (!TextUtils.isEmpty(brandString)) {
-         }
-         values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, brandString);
+             brand = brandString;
+         };
+         values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, brand);
 
-         //Determine if this is new or exisiting lipstick
+         //Determine if this is new or existing lipstick
          if (mCurrentLipstickUri == null) {
              //This is a new lipstick so insert lipstick
              Uri newUri = getContentResolver().insert(LipstickEntry.CONTENT_URI,values);
