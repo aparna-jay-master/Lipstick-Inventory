@@ -46,7 +46,6 @@ public class LipstickCursorAdapter extends CursorAdapter {
         //Find columns on lipstick table for each attribute
         int imageColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_IMAGE);
         int colorColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_COLOR);
-        int brandColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_BRAND);
         int priceColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_PRICE);
         int quantityColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_QUANTITY);
 

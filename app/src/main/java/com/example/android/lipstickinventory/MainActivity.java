@@ -140,7 +140,6 @@ public class MainActivity extends AppCompatActivity
                 LipstickEntry._ID,
                 LipstickEntry.COLUMN_LIPSTICK_IMAGE,
                 LipstickEntry.COLUMN_LIPSTICK_COLOR,
-                LipstickEntry.COLUMN_LIPSTICK_BRAND,
                 LipstickEntry.COLUMN_LIPSTICK_PRICE,
                 LipstickEntry.COLUMN_LIPSTICK_QUANTITY};
 

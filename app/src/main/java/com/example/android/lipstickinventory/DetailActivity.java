@@ -12,10 +12,12 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,11 +42,11 @@ public class DetailActivity extends AppCompatActivity implements
     private EditText mColorView;
     private EditText mBrandView;
     private EditText mPriceView;
+    private EditText mQuantityView;
 
-    //Quantity text
-    private TextView mQuantityView;
-
-
+    //Buttons
+    private Button mPlusButton;
+    private Button mMinusButton;
 
     private boolean mLipstickHasChanged = false;
 
@@ -84,30 +86,58 @@ public class DetailActivity extends AppCompatActivity implements
             getLoaderManager().initLoader(EXISTING_LIPSTICK_LOADER, null, this);
         }
 
-        //Find all the relevant views
-        //TODO: Buttons
+        //Find all the relevant data views
         mImageView = (ImageView) findViewById(R.id.detail_lipstick_image_view);
         mColorView = (EditText) findViewById(R.id.detail_color_view);
         mBrandView = (EditText) findViewById(R.id.detail_brand_view);
-        mQuantityView = (TextView) findViewById(R.id.detail_quantity_view);
+        mQuantityView = (EditText) findViewById(R.id.detail_quantity_view);
         mPriceView = (EditText) findViewById(R.id.detail_lipstick_price);
+
+        //Identify all button views
+        //TODO: Sale and email buttons
+        mPlusButton = (Button) findViewById(R.id.detail_plus_button);
+        mMinusButton = (Button) findViewById(R.id.detail_minus_button);
 
         mColorView.setOnTouchListener(mTouchListener);
         mBrandView.setOnTouchListener(mTouchListener);
         mPriceView.setOnTouchListener(mTouchListener);
+        mPlusButton.setOnTouchListener(mTouchListener);
+        mMinusButton.setOnTouchListener(mTouchListener);
+
+        //Plus and minus buttons
+        mPlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int quantity = Integer.parseInt(mQuantityView.getText().toString().trim());
+                quantity++;
+                mQuantityView.setText(Integer.toString(quantity));
+            }
+        });
+
+        mMinusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int quantity = Integer.parseInt(mQuantityView.getText().toString().trim());
+                quantity=quantity-1;
+                mQuantityView.setText(Integer.toString(quantity));
+            }
+        });
+
+
     }
 
-     private void saveLipstick() {
-         //Read input fields
+
+    private void saveLipstick() {
+        //Read input fields
         //Use trim to eliminate leading or trailing white space
          String colorString = mColorView.getText().toString().trim();
          String brandString = mBrandView.getText().toString().trim();
          String priceString = mPriceView.getText().toString().trim();
+         String quantityString = mQuantityView.getText().toString().trim();
 
-         //TODO if quantity changes
          if (mCurrentLipstickUri == null &&
                  TextUtils.isEmpty(colorString) && TextUtils.isEmpty(brandString) &&
-                 TextUtils.isEmpty(priceString))  {
+                 TextUtils.isEmpty(priceString) && TextUtils.isEmpty(quantityString))  {
              //Since nothing was edited no need to do anything
              return;
          }
@@ -123,8 +153,12 @@ public class DetailActivity extends AppCompatActivity implements
              price = Integer.parseInt(priceString);
          }
          values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, price);
-         //TODO update this from the changes in the buttons
-         values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, 0);
+         //if there is no quantity
+        int quantity = 0;
+        if (!TextUtils.isEmpty(quantityString)) {
+            quantity = Integer.parseInt(quantityString);
+        }
+         values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, quantity);
          //if there's no brand
          String brand = "none";
          if (!TextUtils.isEmpty(brandString)) {
