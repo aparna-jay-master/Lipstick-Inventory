@@ -25,6 +25,9 @@ import android.content.Loader;
 
 import com.example.android.lipstickinventory.data.LipstickContract.LipstickEntry;
 
+import static android.R.attr.name;
+import static android.R.id.message;
+
 public class DetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -46,6 +49,7 @@ public class DetailActivity extends AppCompatActivity implements
     //Buttons
     private Button mPlusButton;
     private Button mMinusButton;
+    private Button mOrderButton;
 
     private boolean mLipstickHasChanged = false;
 
@@ -93,9 +97,9 @@ public class DetailActivity extends AppCompatActivity implements
         mPriceView = (EditText) findViewById(R.id.detail_lipstick_price);
 
         //Identify all button views
-        //TODO: Order button
         mPlusButton = (Button) findViewById(R.id.detail_plus_button);
         mMinusButton = (Button) findViewById(R.id.detail_minus_button);
+        mOrderButton = (Button) findViewById(R.id.detail_order_button);
 
         mColorView.setOnTouchListener(mTouchListener);
         mBrandView.setOnTouchListener(mTouchListener);
@@ -124,6 +128,33 @@ public class DetailActivity extends AppCompatActivity implements
                     quantity=quantity-1;
                     mQuantityView.setText(Integer.toString(quantity));
                 }
+            }
+        });
+
+        mOrderButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //Get text for color and brand to put in email
+                String colorEmail = mColorView.getText().toString().trim();
+                String brandEmail = mBrandView.getText().toString().trim();
+
+                //Create email message
+                String message = getString(R.string.email_message) +
+                        "\n" + colorEmail +
+                        " - " + brandEmail;
+
+                //Send intent
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_SUBJECT,
+                        getString(R.string.email_subject));
+                intent.putExtra(Intent.EXTRA_TEXT, message);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+
+
             }
         });
     }

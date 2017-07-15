@@ -65,4 +65,10 @@
     <!-- Toast message in detail when quantity tries to go below zero -->
     <string name="detail_quantity_negative">Quantity cannot go below zero</string>
 
+    <!-- Subject for email -->
+    <string name="email_subject">Order Request from Lipstick Emporium</string>
+
+    <!-- Message of email -->
+    <string name="email_message">We are requesting a shipment of the following item:</string>
+
 </resources>
