@@ -13,4 +13,53 @@
     <string name="action_insert_dummy_data">Add Inventory</string>
     <!--Label for overflow menu option that deletes inventory data -->
     <string name="action_delete_all_entries">Clear Inventory</string>
+
+    <!--Label for Detail Activity if it's a new lipstick -->
+    <string name="detail_activity_title_new_lipstick">Add Lipstick</string>
+
+    <!--Label for Detail Activity if it's an existing lipstick -->
+    <string name="detail_activity_title_current_lipstick">Edit Lipstick</string>
+
+    <!--If inserting new lipstick failed -->
+    <string name="new_lipstick_fail_message">Error saving lipstick</string>
+
+    <!--If inserting new lipstick succeeded -->
+    <string name="new_lipstick_success_message">Lipstick saved</string>
+
+    <!--If updating lipstick failed -->
+    <string name="update_lipstick_fail_message">Error updating lipstick</string>
+
+    <!--If updating lipstick succeeded -->
+    <string name="update_lipstick_success_message">Lipstick updated</string>
+
+    <!-- Label for editor menu option to save lipstick and leave editor [CHAR LIMIT=20] -->
+    <string name="action_save">Save</string>
+
+    <!-- Label for editor overflow menu option that deletes the current lipstick [CHAR LIMIT=20] -->
+    <string name="action_delete">Delete</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing the current lipstick [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
+
+    <!-- Dialog message to ask the user to confirm deleting the current pet [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this pet?</string>
+
+    <!-- Dialog button text for the option to confirm deleting the current lipstick [CHAR LIMIT=20] -->
+    <string name="delete">Delete</string>
+
+    <!-- Dialog button text for the option to cancel deletion of the current lipstick [CHAR LIMIT=20] -->
+    <string name="cancel">Cancel</string>
+
+    <!-- Toast message in editor when current pet was successfully deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_lipstick_successful">Lipstick deleted</string>
+
+    <!-- Toast message in editor when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_lipstick_failed">Error with deleting lipstick</string>
+
 </resources>

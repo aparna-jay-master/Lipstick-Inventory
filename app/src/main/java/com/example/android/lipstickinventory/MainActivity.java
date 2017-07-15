@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        //Find GridView to populat lipstick data
+        //Find GridView to populate lipstick data
         GridView lipstickGridView = (GridView) findViewById(R.id.grid);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
         lipstickGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Log.v ("MainActivity", "this has been clicked");
                 // Create new intent to go to details
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
 
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity
                 // Set the URI on the data field of the intent
                 intent.setData(currentLipstickUri);
 
-                // Launch the {@link EditorActivity} to display the data for the current pet.
+                // Launch the {@link DetailActivity} to display the data for the current pet.
                 startActivity(intent);
             }
         });
