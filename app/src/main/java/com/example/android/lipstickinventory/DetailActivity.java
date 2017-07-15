@@ -109,8 +109,8 @@ public class DetailActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 int quantity = Integer.parseInt(mQuantityView.getText().toString().trim());
-                quantity++;
-                mQuantityView.setText(Integer.toString(quantity));
+                    quantity++;
+                    mQuantityView.setText(Integer.toString(quantity));
             }
         });
 
@@ -118,14 +118,16 @@ public class DetailActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 int quantity = Integer.parseInt(mQuantityView.getText().toString().trim());
-                quantity=quantity-1;
-                mQuantityView.setText(Integer.toString(quantity));
+                if (quantity == 0) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.detail_quantity_negative),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    quantity=quantity-1;
+                    mQuantityView.setText(Integer.toString(quantity));
+                }
             }
         });
-
-
     }
-
 
     private void saveLipstick() {
         //Read input fields

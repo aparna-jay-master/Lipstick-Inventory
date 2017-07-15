@@ -59,7 +59,10 @@
     <!-- Toast message in editor when current pet was successfully deleted [CHAR LIMIT=NONE] -->
     <string name="editor_delete_lipstick_successful">Lipstick deleted</string>
 
-    <!-- Toast message in editor when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
+    <!-- Toast message in detail when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
     <string name="editor_delete_lipstick_failed">Error with deleting lipstick</string>
+
+    <!-- Toast message in detail when quantity tries to go below zero -->
+    <string name="detail_quantity_negative">Quantity cannot go below zero</string>
 
 </resources>
