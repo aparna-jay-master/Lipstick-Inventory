@@ -44,6 +44,8 @@ public class DetailActivity extends AppCompatActivity implements
     //Quantity text
     private TextView mQuantityView;
 
+
+
     private boolean mLipstickHasChanged = false;
 
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
@@ -96,7 +98,7 @@ public class DetailActivity extends AppCompatActivity implements
     }
 
      private void saveLipstick() {
-        //Read input fields
+         //Read input fields
         //Use trim to eliminate leading or trailing white space
          String colorString = mColorView.getText().toString().trim();
          String brandString = mBrandView.getText().toString().trim();
@@ -299,9 +301,8 @@ public class DetailActivity extends AppCompatActivity implements
             //Update views
             mColorView.setText(color);
             mBrandView.setText(brand);
-            mPriceView.setText(price);
-            mQuantityView.setText(quantity);
-            //TODO make sure this works, in Pets weight is converted to string
+            mPriceView.setText(Integer.toString(price));
+            mQuantityView.setText(Integer.toString(quantity));
         }
     }
 

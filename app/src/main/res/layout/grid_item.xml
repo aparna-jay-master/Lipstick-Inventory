@@ -3,7 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="8dp">
+    android:paddingTop="8dp"
+    android:id="@+id/grid_item"
+    android:descendantFocusability="blocksDescendants">
 
     <ImageView
         android:id="@+id/grid_image"

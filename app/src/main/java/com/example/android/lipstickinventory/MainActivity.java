@@ -8,6 +8,7 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,11 +18,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.GridView;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 
 import com.example.android.lipstickinventory.data.LipstickContract;
 import com.example.android.lipstickinventory.data.LipstickContract.LipstickEntry;
+
+import static android.R.attr.id;
 
 public class MainActivity extends AppCompatActivity
     implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -54,12 +58,11 @@ public class MainActivity extends AppCompatActivity
         View emptyView = findViewById(R.id.empty_view);
         lipstickGridView.setEmptyView(emptyView);
 
-        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
-        // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
+        // Setup an Adapter to create a list item for each row of lipstick data in the Cursor.
+        // There is no lipstick data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new LipstickCursorAdapter(this, null);
         lipstickGridView.setAdapter(mCursorAdapter);
 
-        // Setup the item click listener
         lipstickGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
