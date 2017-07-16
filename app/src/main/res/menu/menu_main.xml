@@ -5,6 +5,12 @@
     tools:context=".CatalogActivity">
 
     <item
+        android:id="@+id/action_search"
+        android:title="@string/action_save"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_insert_inventory_data"
         android:title="@string/action_insert_dummy_data"
         app:showAsAction="never" />

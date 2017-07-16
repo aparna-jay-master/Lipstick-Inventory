@@ -147,6 +147,11 @@ public class MainActivity extends AppCompatActivity
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
             // Respond to a click on the "Insert dummy data" menu option
+            case R.id.action_search:
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+                return true;
+            // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_inventory_data:
                 insertInventoryData();
                 return true;
