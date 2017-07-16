@@ -71,4 +71,10 @@
     <!-- Message of email -->
     <string name="email_message">We are requesting a shipment of the following item:</string>
 
+    <!-- Error if no internet connection -->
+    <string name="no_internet_connection">No internet connection</string>
+
+    <!-- If there are no results -->
+    <string name="no_results">No results found</string>
+
 </resources>
