@@ -91,47 +91,6 @@ public class MainActivity extends AppCompatActivity
 
         // Kick off the loader
         getLoaderManager().initLoader(LIPSTICK_LOADER, null, this);
-
-        //TODO figure out sale button
-        Button saleButton = (Button) findViewById(R.id.grid_sale_button);
-
-
-
-
-        saleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Figure out what number is even being shown
-                final TextView mQuantityView = (TextView) findViewById(R.id.grid_quantity);
-                int currentQuantity = Integer.parseInt(mQuantityView.getText().toString());
-
-                if (currentQuantity == 0) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.detail_quantity_negative),
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    int newQuantity = currentQuantity - 1;
-                    Uri currentLipstickUri = ContentUris.withAppendedId(LipstickEntry.CONTENT_URI, id);
-
-                    //Create content value
-                    ContentValues values = new ContentValues();
-                    values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, newQuantity);
-                    int rowsAffected = getContentResolver().update(currentLipstickUri, values, null, null);
-
-                    // Show a toast message depending on whether or not the update was successful.
-                    if (rowsAffected == 0) {
-                        // If no rows were affected, then there was an error with the update.
-                        Toast.makeText(getApplicationContext(),
-                                getString(R.string.update_lipstick_fail_message),
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Otherwise, the update was successful and we can display a toast.
-                        Toast.makeText(getApplicationContext(),
-                                getString(R.string.update_lipstick_success_message),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
     }
 
     /**
