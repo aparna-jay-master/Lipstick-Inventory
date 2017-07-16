@@ -92,6 +92,9 @@ public class DetailActivity extends AppCompatActivity implements
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a lipstick that hasn't been created yet.)
             invalidateOptionsMenu();
+
+            //To help plus and minus buttons work, auto set quantity to start at zero
+            setQuantity();
         } else {
             // Otherwise this is an existing lipstick, so change app bar to say "Edit Lipstick"
             setTitle(getString(R.string.detail_activity_title_current_lipstick));
@@ -179,6 +182,12 @@ public class DetailActivity extends AppCompatActivity implements
                 }
             }
         });
+    }
+
+    private void setQuantity () {
+            mQuantityView = (EditText) findViewById(R.id.detail_quantity_view);
+            String quantityText = "0";
+            mQuantityView.setText(quantityText);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

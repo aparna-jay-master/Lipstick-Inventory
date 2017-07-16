@@ -8,6 +8,9 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,12 +21,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.android.lipstickinventory.data.LipstickContract;
 import com.example.android.lipstickinventory.data.LipstickContract.LipstickEntry;
+
+import java.io.ByteArrayOutputStream;
 
 import static android.R.attr.id;
 
@@ -83,6 +90,11 @@ public class MainActivity extends AppCompatActivity
 
         // Kick off the loader
         getLoaderManager().initLoader(LIPSTICK_LOADER, null, this);
+
+        //TODO figure out sale button
+        final TextView mQuantityView = (TextView) findViewById(R.id.grid_quantity);
+        Button saleButton = (Button) findViewById(R.id.grid_sale_button);
+
     }
 
     /**
@@ -91,7 +103,20 @@ public class MainActivity extends AppCompatActivity
     private void insertInventoryData() {
         // Create a ContentValues object where column names are the keys and we input inventory
         ContentValues values = new ContentValues();
-        values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, "null");
+
+        //get image
+        //TODO: Maybe get a few nice images here
+        Drawable imageFromFile = getDrawable(R.drawable.kiss_mark);
+
+        //Convert to bitmap
+        BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageFromFile);
+        Bitmap bitmap = bitmapDrawable .getBitmap();
+        //Convert to byte to store
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        byte[] imageByte = bos.toByteArray();
+
+        values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, imageByte);
         values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, "Vibrant Red");
         values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, "Urban Decay");
         values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, 1500);
