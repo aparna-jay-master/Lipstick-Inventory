@@ -50,6 +50,9 @@
     <!-- Dialog message to ask the user to confirm deleting the current lipstick [CHAR LIMIT=NONE] -->
     <string name="delete_dialog_msg">Delete this lipstick?</string>
 
+    <!-- Dialog message to ask the user to confirm deleting all lipsticks [CHAR LIMIT=NONE] -->
+    <string name="delete_all_dialog_msg">Delete all inventory? This cannot be undone. </string>
+
     <!-- Dialog button text for the option to confirm deleting the current lipstick [CHAR LIMIT=20] -->
     <string name="delete">Delete</string>
 
