@@ -8,6 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.app.LoaderManager;
 import android.provider.MediaStore;
@@ -28,6 +32,9 @@ import android.widget.Toast;
 import android.content.Loader;
 
 import com.example.android.lipstickinventory.data.LipstickContract.LipstickEntry;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 import static android.R.attr.data;
 import static android.R.attr.name;
@@ -121,7 +128,7 @@ public class DetailActivity extends AppCompatActivity implements
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takePictureIntent, 1);
                 }
-                }
+            }
         });
 
         //Plus and minus buttons
@@ -129,8 +136,8 @@ public class DetailActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 int quantity = Integer.parseInt(mQuantityView.getText().toString().trim());
-                    quantity++;
-                    mQuantityView.setText(Integer.toString(quantity));
+                quantity++;
+                mQuantityView.setText(Integer.toString(quantity));
             }
         });
 
@@ -142,13 +149,13 @@ public class DetailActivity extends AppCompatActivity implements
                     Toast.makeText(getApplicationContext(), getString(R.string.detail_quantity_negative),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    quantity=quantity-1;
+                    quantity = quantity - 1;
                     mQuantityView.setText(Integer.toString(quantity));
                 }
             }
         });
 
-        mOrderButton.setOnClickListener(new View.OnClickListener(){
+        mOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Get text for color and brand to put in email
@@ -184,74 +191,83 @@ public class DetailActivity extends AppCompatActivity implements
     private void saveLipstick() {
         //Read input fields
         //Use trim to eliminate leading or trailing white space
-        //TODO: add image here
+        Drawable imageImage = mImageView.getDrawable();
+        //Convert to bitmap
+        BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageImage);
+        Bitmap bitmap = bitmapDrawable .getBitmap();
+        //Convert to byte to store
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        byte[] imageByte = bos.toByteArray();
+
+        //All the rest
         String colorString = mColorView.getText().toString().trim();
-         String brandString = mBrandView.getText().toString().trim();
-         String priceString = mPriceView.getText().toString().trim();
-         String quantityString = mQuantityView.getText().toString().trim();
+        String brandString = mBrandView.getText().toString().trim();
+        String priceString = mPriceView.getText().toString().trim();
+        String quantityString = mQuantityView.getText().toString().trim();
 
-         if (mCurrentLipstickUri == null &&
-                 TextUtils.isEmpty(colorString) && TextUtils.isEmpty(brandString) &&
-                 TextUtils.isEmpty(priceString) && TextUtils.isEmpty(quantityString))  {
-             //Since nothing was edited no need to do anything
-             return;
-         }
+        if (mCurrentLipstickUri == null &&
+                TextUtils.isEmpty(colorString) && TextUtils.isEmpty(brandString) &&
+                TextUtils.isEmpty(priceString) && TextUtils.isEmpty(quantityString)) {
+            //Since nothing was edited no need to do anything
+            return;
+        }
 
-         //Create ContentValues where column names are the keys and lipstick
-         //attributes from the editor are values
-         ContentValues values = new ContentValues();
-         //TODO:this isn't a string anymore
-         values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, "no_image");
-         values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, colorString);
-         //if there is no price
-         int price = 0;
-         if (!TextUtils.isEmpty(priceString)) {
-             price = Integer.parseInt(priceString);
-         }
-         values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, price);
-         //if there is no quantity
+        //Create ContentValues where column names are the keys and lipstick
+        //attributes from the editor are values
+        ContentValues values = new ContentValues();
+        values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, imageByte);
+        values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, colorString);
+        //if there is no price
+        int price = 0;
+        if (!TextUtils.isEmpty(priceString)) {
+            price = Integer.parseInt(priceString);
+        }
+        values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, price);
+        //if there is no quantity
         int quantity = 0;
         if (!TextUtils.isEmpty(quantityString)) {
             quantity = Integer.parseInt(quantityString);
         }
-         values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, quantity);
-         //if there's no brand
-         String brand = "none";
-         if (!TextUtils.isEmpty(brandString)) {
-             brand = brandString;
-         };
-         values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, brand);
+        values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, quantity);
+        //if there's no brand
+        String brand = "none";
+        if (!TextUtils.isEmpty(brandString)) {
+            brand = brandString;
+        }
+        ;
+        values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, brand);
 
-         //Determine if this is new or existing lipstick
-         if (mCurrentLipstickUri == null) {
-             //This is a new lipstick so insert lipstick
-             Uri newUri = getContentResolver().insert(LipstickEntry.CONTENT_URI,values);
+        //Determine if this is new or existing lipstick
+        if (mCurrentLipstickUri == null) {
+            //This is a new lipstick so insert lipstick
+            Uri newUri = getContentResolver().insert(LipstickEntry.CONTENT_URI, values);
 
-             // Show a toast message depending on whether or not the insertion was successful.
-             if (newUri == null) {
-                 // If the new content URI is null, then there was an error with insertion.
-                 Toast.makeText(this, getString(R.string.new_lipstick_fail_message),
-                         Toast.LENGTH_SHORT).show();
-             } else {
-                 // Otherwise, the insertion was successful and we can display a toast.
-                 Toast.makeText(this, getString(R.string.new_lipstick_success_message),
-                         Toast.LENGTH_SHORT).show();
-             }
-         } else {
-             //Otherwise if an existing lipstick update with content URI
-             int rowsAffected = getContentResolver().update(mCurrentLipstickUri, values, null, null);
+            // Show a toast message depending on whether or not the insertion was successful.
+            if (newUri == null) {
+                // If the new content URI is null, then there was an error with insertion.
+                Toast.makeText(this, getString(R.string.new_lipstick_fail_message),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the insertion was successful and we can display a toast.
+                Toast.makeText(this, getString(R.string.new_lipstick_success_message),
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            //Otherwise if an existing lipstick update with content URI
+            int rowsAffected = getContentResolver().update(mCurrentLipstickUri, values, null, null);
 
-             // Show a toast message depending on whether or not the update was successful.
-             if (rowsAffected == 0) {
-                 // If no rows were affected, then there was an error with the update.
-                 Toast.makeText(this, getString(R.string.update_lipstick_fail_message),
-                         Toast.LENGTH_SHORT).show();
-             } else {
-                 // Otherwise, the update was successful and we can display a toast.
-                 Toast.makeText(this, getString(R.string.update_lipstick_success_message),
-                         Toast.LENGTH_SHORT).show();
-             }
-         }
+            // Show a toast message depending on whether or not the update was successful.
+            if (rowsAffected == 0) {
+                // If no rows were affected, then there was an error with the update.
+                Toast.makeText(this, getString(R.string.update_lipstick_fail_message),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the update was successful and we can display a toast.
+                Toast.makeText(this, getString(R.string.update_lipstick_success_message),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -349,7 +365,7 @@ public class DetailActivity extends AppCompatActivity implements
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         //Define projection with all items
-        String [] projection = {
+        String[] projection = {
                 LipstickEntry._ID,
                 LipstickEntry.COLUMN_LIPSTICK_IMAGE,
                 LipstickEntry.COLUMN_LIPSTICK_COLOR,
@@ -382,14 +398,15 @@ public class DetailActivity extends AppCompatActivity implements
             int priceColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_PRICE);
             int quantityColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_QUANTITY);
 
-            //TODO need to change this
-            String image = cursor.getString(imageColumnIndex);
+            byte[] image = cursor.getBlob(imageColumnIndex);
             String color = cursor.getString(colorColumnIndex);
             String brand = cursor.getString(brandColumnIndex);
             int price = cursor.getInt(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
 
             //Update views
+            Bitmap lipstickBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            mImageView.setImageBitmap(lipstickBitmap);
             mColorView.setText(color);
             mBrandView.setText(brand);
             mPriceView.setText(Integer.toString(price));

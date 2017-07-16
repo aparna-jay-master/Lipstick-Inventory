@@ -123,7 +123,6 @@ public class LipstickProvider extends ContentProvider {
      * for that specific row in the database.
      */
     private Uri insertLipstick(Uri uri, ContentValues values) {
-        //TODO: add image stuff here
 
         // Check that the color is not null
         String color = values.getAsString(LipstickEntry.COLUMN_LIPSTICK_COLOR);
@@ -143,7 +142,7 @@ public class LipstickProvider extends ContentProvider {
             throw new IllegalArgumentException("Quantity must be greater than zero");
         }
 
-        // Get writeable database
+        // Get writable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
         // Insert the new pet with the given values
@@ -192,7 +191,6 @@ public class LipstickProvider extends ContentProvider {
      */
     private int updateLipstick(Uri uri, ContentValues values,
                                String selection, String[] selectionArgs) {
-        //TODO insert image check here
 
         // If the color key is present check that the color value is not null.
         if (values.containsKey(LipstickEntry.COLUMN_LIPSTICK_COLOR)) {
@@ -223,7 +221,7 @@ public class LipstickProvider extends ContentProvider {
             return 0;
         }
 
-        // Otherwise, get writeable database to update the data
+        // Otherwise, get writable database to update the data
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
         // Perform the update on the database and get the number of rows affected

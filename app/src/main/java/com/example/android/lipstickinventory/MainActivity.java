@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
     private void insertInventoryData() {
         // Create a ContentValues object where column names are the keys and we input inventory
         ContentValues values = new ContentValues();
-        values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, "no_image");
+        values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, "null");
         values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, "Vibrant Red");
         values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, "Urban Decay");
         values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, 1500);

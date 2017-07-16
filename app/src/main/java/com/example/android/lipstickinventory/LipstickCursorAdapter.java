@@ -2,6 +2,8 @@ package com.example.android.lipstickinventory;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
 import android.view.LayoutInflater;
@@ -26,7 +28,7 @@ public class LipstickCursorAdapter extends CursorAdapter {
         super(context, c, 0);
     }
 
-    //Make new black grid item view
+    //Make new grid item view
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.grid_item,parent,false);
@@ -50,10 +52,10 @@ public class LipstickCursorAdapter extends CursorAdapter {
         int quantityColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_QUANTITY);
 
         //Read Lipstick attributes from Cursor of current entry
+        byte[] lipstickImage = cursor.getBlob(imageColumnIndex);
         String lipstickColor = cursor.getString(colorColumnIndex);
         int lipstickQuantity = cursor.getInt(quantityColumnIndex);
         int lipstickPrice = cursor.getInt(priceColumnIndex);
-        String lipstickImage = cursor.getString(imageColumnIndex);
 
         //Convert price into dollars
         int lipstickDollars = lipstickPrice/100;
@@ -63,8 +65,8 @@ public class LipstickCursorAdapter extends CursorAdapter {
         quantityView.setText("Quantity: " + lipstickQuantity);
         priceView.setText("$" + lipstickDollars);
 
-        //Update ImageView
-        //TODO: figure out how to put a real image here
-        pictureImageView.setImageResource(R.drawable.kiss_mark);
+        //Update ImageView by converting to bitmap
+        Bitmap lipstickBitmap = BitmapFactory.decodeByteArray(lipstickImage, 0, lipstickImage.length);
+        pictureImageView.setImageBitmap(lipstickBitmap);
     }
 }
