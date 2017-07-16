@@ -1,7 +1,6 @@
 package com.example.android.lipstickinventory;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.List;
+import com.example.android.lipstickinventory.Networking.Search;
 
-import static android.R.attr.resource;
+import java.util.List;
 
 /**
  * {@link SearchAdapter} knows how to create a list layout for {@link Search} object

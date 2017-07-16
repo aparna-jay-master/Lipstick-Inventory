@@ -1,4 +1,4 @@
-package com.example.android.lipstickinventory;
+package com.example.android.lipstickinventory.Networking;
 
 /**
  * Creates Search object with has

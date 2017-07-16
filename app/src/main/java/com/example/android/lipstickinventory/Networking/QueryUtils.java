@@ -1,4 +1,4 @@
-package com.example.android.lipstickinventory;
+package com.example.android.lipstickinventory.Networking;
 
 import android.text.TextUtils;
 import android.util.Log;

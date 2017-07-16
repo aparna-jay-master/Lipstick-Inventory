@@ -1,4 +1,4 @@
-package com.example.android.lipstickinventory;
+package com.example.android.lipstickinventory.Networking;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
