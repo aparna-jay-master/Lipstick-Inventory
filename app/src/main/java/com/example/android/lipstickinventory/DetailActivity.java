@@ -199,7 +199,6 @@ public class DetailActivity extends AppCompatActivity implements
 
     private void saveLipstick() {
         //Read input fields
-        //Use trim to eliminate leading or trailing white space
         Drawable imageImage = mImageView.getDrawable();
         //Convert to bitmap
         BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageImage);
@@ -244,7 +243,6 @@ public class DetailActivity extends AppCompatActivity implements
         if (!TextUtils.isEmpty(brandString)) {
             brand = brandString;
         }
-        ;
         values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, brand);
 
         //Determine if this is new or existing lipstick

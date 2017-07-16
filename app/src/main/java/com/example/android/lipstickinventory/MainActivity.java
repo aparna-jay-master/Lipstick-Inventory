@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity
         lipstickGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Log.v ("MainActivity", "this has been clicked");
                 // Create new intent to go to details
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
 
@@ -94,9 +93,45 @@ public class MainActivity extends AppCompatActivity
         getLoaderManager().initLoader(LIPSTICK_LOADER, null, this);
 
         //TODO figure out sale button
-        final TextView mQuantityView = (TextView) findViewById(R.id.grid_quantity);
         Button saleButton = (Button) findViewById(R.id.grid_sale_button);
 
+
+
+
+        saleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Figure out what number is even being shown
+                final TextView mQuantityView = (TextView) findViewById(R.id.grid_quantity);
+                int currentQuantity = Integer.parseInt(mQuantityView.getText().toString());
+
+                if (currentQuantity == 0) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.detail_quantity_negative),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    int newQuantity = currentQuantity - 1;
+                    Uri currentLipstickUri = ContentUris.withAppendedId(LipstickEntry.CONTENT_URI, id);
+
+                    //Create content value
+                    ContentValues values = new ContentValues();
+                    values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, newQuantity);
+                    int rowsAffected = getContentResolver().update(currentLipstickUri, values, null, null);
+
+                    // Show a toast message depending on whether or not the update was successful.
+                    if (rowsAffected == 0) {
+                        // If no rows were affected, then there was an error with the update.
+                        Toast.makeText(getApplicationContext(),
+                                getString(R.string.update_lipstick_fail_message),
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Otherwise, the update was successful and we can display a toast.
+                        Toast.makeText(getApplicationContext(),
+                                getString(R.string.update_lipstick_success_message),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -107,7 +142,7 @@ public class MainActivity extends AppCompatActivity
         ContentValues values = new ContentValues();
 
         //get image
-        //TODO: Maybe get a few nice images here
+        //TODO: Would be nice to put actually image here
         Drawable imageFromFile = getDrawable(R.drawable.kiss_mark);
 
         //Convert to bitmap
