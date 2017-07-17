@@ -92,6 +92,7 @@ public class DetailActivity extends AppCompatActivity implements
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a lipstick that hasn't been created yet.)
             invalidateOptionsMenu();
+            hideOrderButton();
 
             //To help plus and minus buttons work, auto set quantity to start at zero
             setQuantity();
@@ -511,5 +512,10 @@ public class DetailActivity extends AppCompatActivity implements
 
         // Close the activity
         finish();
+    }
+
+    private void hideOrderButton() {
+        Button OrderButton = (Button) findViewById(R.id.detail_order_button);
+        OrderButton.setVisibility(OrderButton.GONE);
     }
 }
