@@ -198,12 +198,12 @@ public class DetailActivity extends AppCompatActivity implements
         }
     }
 
-    private void saveLipstick() {
+    private boolean saveLipstick() {
         //Read input fields
         Drawable imageImage = mImageView.getDrawable();
         //Convert to bitmap
         BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageImage);
-        Bitmap bitmap = bitmapDrawable .getBitmap();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
         //Convert to byte to store
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
@@ -219,62 +219,69 @@ public class DetailActivity extends AppCompatActivity implements
                 TextUtils.isEmpty(colorString) && TextUtils.isEmpty(brandString) &&
                 TextUtils.isEmpty(priceString) && TextUtils.isEmpty(quantityString)) {
             //Since nothing was edited no need to do anything
-            return;
+            return true;
         }
 
-        //Create ContentValues where column names are the keys and lipstick
-        //attributes from the editor are values
-        ContentValues values = new ContentValues();
-        values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, imageByte);
-        values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, colorString);
-        //if there is no price
-        int price = 0;
-        if (!TextUtils.isEmpty(priceString)) {
-            price = Integer.parseInt(priceString);
-        }
-        values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, price);
-        //if there is no quantity
-        int quantity = 0;
-        if (!TextUtils.isEmpty(quantityString)) {
-            quantity = Integer.parseInt(quantityString);
-        }
-        values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, quantity);
-        //if there's no brand
-        String brand = "none";
-        if (!TextUtils.isEmpty(brandString)) {
-            brand = brandString;
-        }
-        values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, brand);
-
-        //Determine if this is new or existing lipstick
-        if (mCurrentLipstickUri == null) {
-            //This is a new lipstick so insert lipstick
-            Uri newUri = getContentResolver().insert(LipstickEntry.CONTENT_URI, values);
-
-            // Show a toast message depending on whether or not the insertion was successful.
-            if (newUri == null) {
-                // If the new content URI is null, then there was an error with insertion.
-                Toast.makeText(this, getString(R.string.new_lipstick_fail_message),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                // Otherwise, the insertion was successful and we can display a toast.
-                Toast.makeText(this, getString(R.string.new_lipstick_success_message),
-                        Toast.LENGTH_SHORT).show();
-            }
+        //Check if Color is empty. Quantity and price have a default values, rest are not required
+        if (TextUtils.isEmpty(colorString)) {
+            return false;
         } else {
-            //Otherwise if an existing lipstick update with content URI
-            int rowsAffected = getContentResolver().update(mCurrentLipstickUri, values, null, null);
 
-            // Show a toast message depending on whether or not the update was successful.
-            if (rowsAffected == 0) {
-                // If no rows were affected, then there was an error with the update.
-                Toast.makeText(this, getString(R.string.update_lipstick_fail_message),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                // Otherwise, the update was successful and we can display a toast.
-                Toast.makeText(this, getString(R.string.update_lipstick_success_message),
-                        Toast.LENGTH_SHORT).show();
+            //Create ContentValues where column names are the keys and lipstick
+            //attributes from the editor are values
+            ContentValues values = new ContentValues();
+            values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, imageByte);
+            values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, colorString);
+            //if there is no price
+            int price = 0;
+            if (!TextUtils.isEmpty(priceString)) {
+                price = Integer.parseInt(priceString);
             }
+            values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, price);
+            //if there is no quantity
+            int quantity = 0;
+            if (!TextUtils.isEmpty(quantityString)) {
+                quantity = Integer.parseInt(quantityString);
+            }
+            values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, quantity);
+            //if there's no brand
+            String brand = "none";
+            if (!TextUtils.isEmpty(brandString)) {
+                brand = brandString;
+            }
+            values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, brand);
+
+            //Determine if this is new or existing lipstick
+            if (mCurrentLipstickUri == null) {
+                //This is a new lipstick so insert lipstick
+                Uri newUri = getContentResolver().insert(LipstickEntry.CONTENT_URI, values);
+
+                // Show a toast message depending on whether or not the insertion was successful.
+                if (newUri == null) {
+                    // If the new content URI is null, then there was an error with insertion.
+                    Toast.makeText(this, getString(R.string.new_lipstick_fail_message),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // Otherwise, the insertion was successful and we can display a toast.
+                    Toast.makeText(this, getString(R.string.new_lipstick_success_message),
+                            Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                //Otherwise if an existing lipstick update with content URI
+                int rowsAffected = getContentResolver().update(mCurrentLipstickUri, values, null, null);
+
+                // Show a toast message depending on whether or not the update was successful.
+                if (rowsAffected == 0) {
+                    // If no rows were affected, then there was an error with the update.
+                    Toast.makeText(this, getString(R.string.update_lipstick_fail_message),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // Otherwise, the update was successful and we can display a toast.
+                    Toast.makeText(this, getString(R.string.update_lipstick_success_message),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+            return true;
         }
     }
 
@@ -308,9 +315,10 @@ public class DetailActivity extends AppCompatActivity implements
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 // Save pet to database
-                saveLipstick();
-                // Exit activity
-                finish();
+                if (saveLipstick()){
+                    finish();
+                }else {
+                }
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
