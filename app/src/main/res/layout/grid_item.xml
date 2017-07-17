@@ -9,11 +9,12 @@
 
     <ImageView
         android:id="@+id/grid_image"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:padding="16dp"
         android:scaleType="centerCrop"
-        android:adjustViewBounds="true" />
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:src="@drawable/estee_lauder_furious"/>
 
     <TextView
         android:id="@+id/grid_color"

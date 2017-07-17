@@ -97,13 +97,24 @@ public class MainActivity extends AppCompatActivity
      * Insert lipstick inventory
      */
     private void insertInventoryData() {
-        // Create a ContentValues object where column names are the keys and we input inventory
-        ContentValues values = new ContentValues();
+        //add first entry
+        Drawable heroineImage = getDrawable(R.drawable.mac_heroine);
+        addToDatabase(convertToByte(heroineImage), "Heroine", "MAC", 1500, 20);
 
-        //get image
-        //TODO: Would be nice to put actually image here
-        Drawable imageFromFile = getDrawable(R.drawable.kiss_mark);
+        //add second entry
+        Drawable furiousImage = getDrawable(R.drawable.estee_lauder_furious);
+        addToDatabase(convertToByte(furiousImage), "Furious", "Estee Lauder", 1700, 53);
 
+        //add third entry
+        Drawable schiapImage = getDrawable(R.drawable.nars_schiap);
+        addToDatabase(convertToByte(schiapImage), "Schiap", "NARS", 1300, 87);
+
+        //add fourth entry
+        Drawable parisianImage = getDrawable(R.drawable.bobbi_brown_parisian);
+        addToDatabase(convertToByte(parisianImage), "Parisian", "Bobbi Brown", 2800, 47);
+    }
+
+    private byte[] convertToByte (Drawable imageFromFile) {
         //Convert to bitmap
         BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageFromFile);
         Bitmap bitmap = bitmapDrawable .getBitmap();
@@ -111,15 +122,25 @@ public class MainActivity extends AppCompatActivity
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
         byte[] imageByte = bos.toByteArray();
+        return imageByte;
+    }
 
-        values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, imageByte);
-        values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, "Vibrant Red");
-        values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, "Urban Decay");
-        values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, 1500);
-        values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, 7);
+    private void addToDatabase (byte[] image,
+                                String colorString,
+                                String brandString,
+                                int priceInt,
+                                int quantityInt) {
+        // Create a ContentValues object where column names are the keys and we input inventory
+        ContentValues values = new ContentValues();
+
+        values.put(LipstickEntry.COLUMN_LIPSTICK_IMAGE, image);
+        values.put(LipstickEntry.COLUMN_LIPSTICK_COLOR, colorString);
+        values.put(LipstickEntry.COLUMN_LIPSTICK_BRAND, brandString);
+        values.put(LipstickEntry.COLUMN_LIPSTICK_PRICE, priceInt);
+        values.put(LipstickEntry.COLUMN_LIPSTICK_QUANTITY, quantityInt);
 
         // Insert a new row
-        Uri newUri = getContentResolver().insert(LipstickEntry.CONTENT_URI, values);
+        getContentResolver().insert(LipstickEntry.CONTENT_URI, values);
     }
 
     private void showDeleteConfirmationDialog() {
