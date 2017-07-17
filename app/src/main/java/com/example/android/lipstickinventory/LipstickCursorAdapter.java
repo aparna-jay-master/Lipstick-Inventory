@@ -21,12 +21,6 @@ import android.widget.Toast;
 
 import com.example.android.lipstickinventory.data.LipstickContract.LipstickEntry;
 
-import org.w3c.dom.Text;
-
-import java.net.URI;
-
-import static android.R.attr.id;
-
 /**
  * adapter for grid view that uses lipstick data as source
  */
@@ -56,6 +50,7 @@ public class LipstickCursorAdapter extends CursorAdapter {
         ImageView pictureImageView = (ImageView) view.findViewById(R.id.grid_image);
 
         //Find columns on lipstick table for each attribute
+        int idColumnIndex = cursor.getColumnIndex(LipstickEntry._ID);
         int imageColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_IMAGE);
         int colorColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_COLOR);
         int priceColumnIndex = cursor.getColumnIndex(LipstickEntry.COLUMN_LIPSTICK_PRICE);
@@ -66,6 +61,9 @@ public class LipstickCursorAdapter extends CursorAdapter {
         String lipstickColor = cursor.getString(colorColumnIndex);
         final int lipstickQuantity = cursor.getInt(quantityColumnIndex);
         int lipstickPrice = cursor.getInt(priceColumnIndex);
+
+        //get row id
+        final int rowID = cursor.getInt(idColumnIndex);
 
         //Convert price into dollars
         int lipstickDollars = lipstickPrice/100;
@@ -79,14 +77,13 @@ public class LipstickCursorAdapter extends CursorAdapter {
         Bitmap lipstickBitmap = BitmapFactory.decodeByteArray(lipstickImage, 0, lipstickImage.length);
         pictureImageView.setImageBitmap(lipstickBitmap);
 
-        //TODO figure out sale button
         Button saleButton = (Button) view.findViewById(R.id.grid_sale_button);
 
         saleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri currentLipstickUri = ContentUris.withAppendedId(LipstickEntry.CONTENT_URI, id);
-                makeSale(context, currentLipstickUri, lipstickQuantity);
+                Uri currentLipstickUri = ContentUris.withAppendedId(LipstickEntry.CONTENT_URI, rowID);
+                makeSale(context, lipstickQuantity, currentLipstickUri);
             }
         });
     }
@@ -98,7 +95,7 @@ public class LipstickCursorAdapter extends CursorAdapter {
      * @param uriLipstick URI to update lipstick
      * @param quantity current quantity
      */
-    private void makeSale (Context context, Uri uriLipstick, int quantity) {
+    private void makeSale (Context context, int quantity, Uri uriLipstick) {
         if (quantity == 0) {
             Log.v("LipstickCursorAdpter", "quantity cannot be reduced");
             //Toast.makeText(this, context.getString(R.string.detail_quantity_negative),
