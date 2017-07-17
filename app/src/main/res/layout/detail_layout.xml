@@ -16,7 +16,7 @@
             android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             android:padding="16dp"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             android:src="@drawable/camera"/>
 
         <LinearLayout
